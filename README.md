@@ -11,7 +11,7 @@ Planned features:
   * Support different conversion methods, cm/360, FOV scaling, etc
 * Whatever else I think of
 
-## Dependancies
+## Dependencies
 * Python (obviously)
 
 ## Usage
