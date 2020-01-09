@@ -11,16 +11,19 @@ Planned features:
   * Support different conversion methods, cm/360, FOV scaling, etc
 * Whatever else I think of
 
+## Dependancies
+* Python (obviously)
+
 ## Usage
 
-#### Should work with any OS
+Should work with any OS
 
-You will need python downloaded and you can call it from the command line:
+Simply call it from the command line:
 ```
 python3 pysens.py
 ```
 
-Looking up how to run python files on your specific OS and that should be all you need
+Look up how to run python files on your specific platfrom if it doesn't work for you
 
 ## Disclaimer
 
