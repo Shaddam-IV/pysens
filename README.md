@@ -8,7 +8,7 @@ Planned features:
 * Generate random sensitivity within specified range for many popular games
 * Output sens in different formats
 * Convert sensitivity between games
-** Supporting different conversion methods, cm/360, FOV scaling, etc
+  * Support different conversion methods, cm/360, FOV scaling, etc
 * Whatever else I think of
 
 ## Usage
