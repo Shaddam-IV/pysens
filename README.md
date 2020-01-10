@@ -4,7 +4,7 @@ Sensitivity tool for various games
 Current featues:
 * Generates a random sensitivity between 20 cm/360 and 50 cm/360 for when you want to try out a new sensitivity
 * Outputs the sensitivity as cm/360 or in-game setting
-* takes into account user DPI
+* Takes into account user DPI
 
 Planned features:
 * Change prompts to command line flags
