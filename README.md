@@ -1,8 +1,7 @@
 # pysens
-Sensitivity tool for various games
-> Currently only generates in-game setting for Overwatch
-
-> You can still use the generated cm/360 in other games, but you will have to convert it yourself until I implemet other games
+## Sensitivity tool for various games
+* Currently only generates in-game setting for Overwatch
+* You can still use the generated cm/360 in other games, but you will have to convert it yourself until I implement other games
 
 Current featues:
 * Generates a random sensitivity between 20 cm/360 and 50 cm/360 for when you want to try out a new sensitivity
