@@ -1,61 +1,79 @@
-# My very first python program ever, I expect to be crucified
-# I will be commenting exhaustively becuase I know I'll look at this in the future and have no idea what is happening
-# sens means sensitivity
+# pysens.py
 
 import random
+import argparse
+import os
+import sys
+import math
 
-# variables
-system = 'metric' # metric or imperial
-DPI = 800 # mouse DPI
-game = 'Overwatch' # the game to generate sensitvity for
-OverwatchYaw = 0.0066
-MinSens = 20 # minimum sensitivity (in cm/360)
-MaxSens = 50 # maximum sensitivity (in cm/360)
-SelectedYaw = 0
-output = 'game' # output in either physical (cm/360) or game setting
+# Creating the parser
+my_parser = argparse.ArgumentParser(description='Generated random sensitivity')
 
-if game == 'Overwatch':
+# Add the arguments
+my_parser.add_argument('game',
+						metavar='game',
+						type=str,
+						help='Game to generate sensitivity for')
+my_parser.add_argument('-d',
+						'--dpi',
+						action='store',
+						help='custom dpi, defaults to 800')
+my_parser.add_argument('-l',
+						'--lower',
+						action='store',
+						help='lower sensitivity bound, in cm')
+my_parser.add_argument('-u',
+						'--upper',
+						action='store',
+						help='upper sensitivity bound, in cm')
 
-	SelectedYaw = OverwatchYaw
+# Execute the parse_args() method
+args = my_parser.parse_args()
 
-# cm/360 sens generation
-# getting a random float between min and max variables, then rounding it to 2 decimal places
-RandomFloat = (random.uniform(MinSens,MaxSens))
-RandomFloatRounded = (round(RandomFloat, 2))
+input_game = args.game
 
-# converting rounded float to string in order to print
-RandomFloatRoundedString = str(RandomFloatRounded)
+# Game Dictionary
 
-# getting DPI before calculations
-DPI = input('DPI? Defaults to 800\n')
+games = {
+	#input: [Title, yaw, game sensitivity precision]
+	'ow': ['Overwatch', 0.0066, 2],
+	'fn': ['Fortnite', 0.005555, 3],
+	'csgo': ['Counter-Strike', 0.022, 2],
+	'qc': ['Quake Champions', 0.022, 6]
+}
 
-# testing if DPI is integer or not. I know this is probaly extremely sloppy
-if DPI == '':
-	DPI = 800
+# Variables
+dpi = 800
+minsens = 15
+maxsens = 50
+
+# If flag wasn't entered, set default values
+if type(args.dpi) == str:
+	dpi = int(args.dpi)
 else:
-	try:
-		DPI = int(DPI)
-	except ValueError:
-		print ('Please use intergers only')
-	finally:
-		DPI = int(DPI)
+	dpi = 800
 
-# converting float to ow sensitivity
-OverwatchRandomFloat = (4572 / (5 * RandomFloat * DPI * SelectedYaw))
-OverwatchRandomFloatRounded = (round(OverwatchRandomFloat, 2))
-
-# converting rounded float to string in order to print
-OverwatchRandomFloatRoundedString = str(OverwatchRandomFloatRounded)
-
-# asking user for desired output
-
-output = input("cm/360 or Overwatch output? (enter 'cm' or 'ow') Defaults to game\n")
-
-# printing generated sens
-
-if output == 'cm':
-	print (RandomFloatRoundedString + ' cm/360')
-elif output == 'ow' or output == '':
-	print (OverwatchRandomFloatRoundedString + ' In Overwatch settings')
+if type(args.lower) == str:
+	minsens = int(args.lower)
 else:
-	print ('you done fucked up')
+	minsens = 15
+
+if type(args.upper) == str:
+	maxsens = int(args.upper)
+else:
+	maxsens = 50
+
+# Generating the random sensitivity
+randomfloat = (random.uniform(minsens,maxsens))
+
+# Calculation to convert randomfloat to game sensitivity
+# Pulls game yaw and input precision from dictionary
+def gensens():
+	return round((4572 / (5 * randomfloat * dpi * games.get(input_game)[1])), games.get(input_game)[2])
+
+# Printing output
+if input_game in games:
+	print(str(gensens()) + ' in ' + games.get(input_game)[0] + ' settings (' + str(round(randomfloat, 2)) + 'cm/360)')
+	print('setttings: ' + str(dpi) + ' DPI, ' + str(minsens) + 'cm - ' + str(maxsens) + 'cm')
+else:
+	print('This game is not supported currently')
